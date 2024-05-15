@@ -1,8 +1,7 @@
 <template>
   <div id="app">
     <div class="container">
-
-      <h1>Min filmlista</h1>
+      <h1>Vår filmlista</h1>
       <form @submit.prevent="addMovie">
         <fieldset>
           <legend>Lägg till en film</legend>
@@ -30,20 +29,19 @@
 
       <h2>Filmer</h2>
 
-      <ul>
+      <ul id="movies">
         <li v-for="(movie, index) in movies" :key="index" :data-grade="movie.rating" :data-title="movie.title">
           {{ movie.title }}
           <img v-for="star in parseInt(movie.rating)" :key="star" src="./assets/star.png" alt="Star">
           <img src="./assets/delete.png" alt="Delete movie" class="delete-movie-icon" @click="removeMovie(index)">
         </li>
       </ul>
-
+      <div class="sorting-buttons">
+          <button class="btn btn-success mt-5" @click="sortByTitle">Sortera efter titel</button>
+          <button  class="btn btn-success mt-5" @click="sortByRating">Sortera efter betyg</button>
+        </div>
     </div>
   </div>
-  <div class="sorting-buttons">
-      <button @click="sortByTitle">Sortera efter titel</button>
-      <button @click="sortByRating">Sortera efter betyg</button>
-    </div>
   
 </template>
 
@@ -94,28 +92,3 @@ export default {
 }
 </script>
 
-<style>
-
-#movies {
-    margin: 0;
-    padding: 0;
-}
-
-#movies > li {
-    list-style: none;
-    background-color: #eee;
-    margin: 5px;
-    padding: 20px;
-    box-shadow: 0 0 5px #999;
-}
-
-#movies > li > img {
-    float: right;
-    height: 25px;
-    margin-left: 5px;
-}
-
-.delete-movie-icon {
-    cursor: pointer;
-}
-</style>
