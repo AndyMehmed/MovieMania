@@ -1,26 +1,41 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+    <SearchBar @search="searchMovies" @reset="resetSearchResults" />
+    <MovieList :movies="movies" @remove="removeMovie" />
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import SearchBar from './components/SearchBar.vue';
+import MovieList from './components/MovieList.vue';
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld
+    SearchBar,
+    MovieList
+  },
+  data() {
+    return {
+      movies: []
+    };
+  },
+  methods: {
+    searchMovies(searchTerm) {
+      if (searchTerm.length >= 3) {
+        // Här kan du göra något med searchTerm om det behövs i framtiden
+      }
+    },
+    resetSearchResults() {
+      this.movies = [];
+    },
+    removeMovie(imdbID) {
+      this.movies = this.movies.filter(movie => movie.imdbID !== imdbID);
+      // Här kan du också göra något med imdbID om det behövs i framtiden
+    }
   }
-}
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+/* Din globala CSS kan gå här */
 </style>
