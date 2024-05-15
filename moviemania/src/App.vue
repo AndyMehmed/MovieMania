@@ -1,26 +1,84 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+    <div class="container">
+
+      <h1>Min filmlista</h1>
+      <form @submit.prevent="addMovie">
+        <fieldset>
+          <legend>Lägg till en film</legend>
+
+          <label for="title-field">Titel:</label>
+          <input type="text" id="title-field" class="form-control" v-model="newMovie.title">
+
+          <label for="rating-field">Betyg:</label>
+
+          <select type="text" id="rating-field" class="form-control" v-model="newMovie.rating">
+            <option value="0">Välj betyg här...</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+
+          <input type="submit" class="btn btn-success mt-3" value="Spara film">
+
+        </fieldset>
+      </form>
+
+      <hr>
+
+      <h2>Filmer</h2>
+
+      <ul>
+        <li v-for="(movie, index) in movies" :key="index" :data-grade="movie.rating" :data-title="movie.title">
+          {{ movie.title }}
+          <img v-for="star in parseInt(movie.rating)" :key="star" src="./assets/star.png" alt="Star">
+          <img src="./assets/delete.png" alt="Delete movie" class="delete-movie-icon" @click="removeMovie(index)">
+        </li>
+      </ul>
+
+    </div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  data() {
+    return {
+      newMovie: {
+        title: '',
+        rating: '0'
+      },
+      movies: []
+    }
+  },
+  methods: {
+    addMovie() {
+      // Validate
+      if (this.newMovie.title === '' || this.newMovie.rating === '0') {
+        alert("Var god ange både titel och betyg.");
+        return;
+      }
+
+      // Add movie
+      this.movies.push({
+        title: this.newMovie.title,
+        rating: this.newMovie.rating
+      });
+
+      // Reset form
+      this.newMovie.title = '';
+      this.newMovie.rating = '0';
+    },
+    removeMovie(index) {
+      this.movies.splice(index, 1);
+    }
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style scoped>
+/* Your CSS styles go here */
 </style>
