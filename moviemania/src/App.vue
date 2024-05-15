@@ -40,6 +40,11 @@
 
     </div>
   </div>
+  <div class="sorting-buttons">
+      <button @click="sortByTitle">Sortera efter titel</button>
+      <button @click="sortByRating">Sortera efter betyg</button>
+    </div>
+  
 </template>
 
 <script>
@@ -74,11 +79,43 @@ export default {
     },
     removeMovie(index) {
       this.movies.splice(index, 1);
+    },
+    sortByTitle() {
+      this.movies.sort((a, b) => {
+        return a.title.localeCompare(b.title);
+      });
+    },
+    sortByRating() {
+      this.movies.sort((a, b) => {
+        return b.rating - a.rating;
+      });
     }
   }
 }
 </script>
 
-<style scoped>
-/* Your CSS styles go here */
+<style>
+
+#movies {
+    margin: 0;
+    padding: 0;
+}
+
+#movies > li {
+    list-style: none;
+    background-color: #eee;
+    margin: 5px;
+    padding: 20px;
+    box-shadow: 0 0 5px #999;
+}
+
+#movies > li > img {
+    float: right;
+    height: 25px;
+    margin-left: 5px;
+}
+
+.delete-movie-icon {
+    cursor: pointer;
+}
 </style>
